@@ -31,6 +31,15 @@ public class PartyService implements Mappable<PartyDomain, PartyModel> {
 		}
 	}
 
+	public List<PartyModel> getAllPartiesByMatterId(Long matterID) {
+		List<PartyDomain> partyList = repository.findByMatterId(matterID);
+
+		if (!partyList.isEmpty()) {
+			return this.convertToModelList(partyList);
+		} else {
+			return new ArrayList<>();
+		}
+	}
 	public PartyModel getPartyById(Long id) throws LowException {
 		Optional<PartyDomain> party = repository.findById(id);
 

@@ -1,8 +1,8 @@
 package com.legal.domain;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-
-import com.legal.Utility;
 
 @Entity(name = "party")
 public class PartyDomain {
@@ -51,12 +49,12 @@ public class PartyDomain {
 	String gender;
 
 	@ManyToMany(mappedBy = "parties")
-	Set<MatterDomain> matters = new HashSet<>();
+	List<MatterDomain> matters = new ArrayList<>();
 
 	public PartyDomain() {
-		super();	
+		super();
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -149,7 +147,6 @@ public class PartyDomain {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((matters == null) ? 0 : matters.hashCode());
 		result = prime * result + age;
 		result = prime * result + (int) (contactNo ^ (contactNo >>> 32));
 		result = prime * result + ((dob == null) ? 0 : dob.hashCode());
@@ -158,6 +155,7 @@ public class PartyDomain {
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((matters == null) ? 0 : matters.hashCode());
 		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
 		result = prime * result + ((occupation == null) ? 0 : occupation.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -173,18 +171,58 @@ public class PartyDomain {
 		if (getClass() != obj.getClass())
 			return false;
 		PartyDomain other = (PartyDomain) obj;
-		return ( Utility.equals(matters, other.matters)
-				&& Utility.equals(age, other.age)
-				&& Utility.equals(contactNo, other.contactNo)
-				&& Utility.equals(dob, other.dob)
-				&& Utility.equals(emailId, other.emailId)
-				&& Utility.equals(firstName, other.firstName)
-				&& Utility.equals(gender, other.gender)
-				&& Utility.equals(id, other.id)
-				&& Utility.equals(lastName, other.lastName)
-				&& Utility.equals(middleName, other.middleName)
-				&& Utility.equals(occupation, other.occupation)
-				&& Utility.equals(type, other.type));
+		if (age != other.age)
+			return false;
+		if (contactNo != other.contactNo)
+			return false;
+		if (dob == null) {
+			if (other.dob != null)
+				return false;
+		} else if (!dob.equals(other.dob))
+					return false;
+		if (emailId == null) {
+			if (other.emailId != null)
+				return false;
+		} else if (!emailId.equals(other.emailId))
+					return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+					return false;
+		if (gender == null) {
+			if (other.gender != null)
+				return false;
+		} else if (!gender.equals(other.gender))
+					return false;
+		if (id != other.id)
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+					return false;
+		if (matters == null) {
+			if (other.matters != null)
+				return false;
+		} else if (!matters.equals(other.matters))
+					return false;
+		if (middleName == null) {
+			if (other.middleName != null)
+				return false;
+		} else if (!middleName.equals(other.middleName))
+					return false;
+		if (occupation == null) {
+			if (other.occupation != null)
+				return false;
+		} else if (!occupation.equals(other.occupation))
+					return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+					return false;
+		return true;
 	}
 
 	@Override
@@ -193,13 +231,6 @@ public class PartyDomain {
 				+ ", lastName=" + lastName + ", age=" + age + ", occupation=" + occupation + ", dob=" + dob
 				+ ", emailId=" + emailId + ", contactNo=" + contactNo + ", gender=" + gender + ", Cases=" + matters
 				+ "]";
-	}
-	
-	public static void main(String[] args) {
-		PartyDomain d1=new PartyDomain();
-		PartyDomain d2=new PartyDomain();
-		d1.setAge(10);
-		System.out.println(d1.equals(d2));
 	}
 
 }

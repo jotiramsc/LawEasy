@@ -26,8 +26,8 @@ public class MatterController
     MatterService matterService;
  
     @GetMapping
-    public ResponseEntity<List<MatterModel>> getAllMatters() {
-        List<MatterModel> list = matterService.getAllMatters(); 
+    public ResponseEntity<List<MatterModel>> getAllMatters(@PathVariable("start") Integer start,@PathVariable("limit") Integer limit) {
+        List<MatterModel> list = matterService.getAllMatters(start,limit); 
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
  

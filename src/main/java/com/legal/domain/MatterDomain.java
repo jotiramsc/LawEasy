@@ -2,7 +2,8 @@ package com.legal.domain;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity(name = "matter")
 public class MatterDomain {
@@ -61,8 +63,13 @@ public class MatterDomain {
 	Integer modifiedBy;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "matter_parties", joinColumns = @JoinColumn(name = "matter_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "party_id", referencedColumnName = "id"))
-	Set<PartyDomain> parties = new HashSet<>();
+	@JoinTable(name = "matter_parties", joinColumns = @JoinColumn(name = "matterId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "party_id", referencedColumnName = "id"))
+	List<PartyDomain> parties = new ArrayList<>();
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "matter_timelines", joinColumns = @JoinColumn(name = "matterId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "timeLine_id", referencedColumnName = "id"))
+	List<TimeLineDomain> timeLines = new ArrayList<>();
+
 
 	public MatterDomain() {
 		super();
@@ -181,21 +188,50 @@ public class MatterDomain {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Set<PartyDomain> getParties() {
+	public List<PartyDomain> getParties() {
 		return parties;
 	}
 
-	public void setParties(Set<PartyDomain> parties) {
+	public void setParties(List<PartyDomain> parties) {
 		this.parties = parties;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public List<TimeLineDomain> getTimeLines() {
+		return timeLines;
+	}
+
+	public void setTimeLines(List<TimeLineDomain> timeLines) {
+		this.timeLines = timeLines;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
-		result = prime * result + type;
 		result = prime * result + ((charges == null) ? 0 : charges.hashCode());
 		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
 		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
@@ -206,7 +242,12 @@ public class MatterDomain {
 		result = prime * result + ((listingdate == null) ? 0 : listingdate.hashCode());
 		result = prime * result + ((modifiedBy == null) ? 0 : modifiedBy.hashCode());
 		result = prime * result + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
+		result = prime * result + ((parties == null) ? 0 : parties.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
+		result = prime * result + ((timeLines == null) ? 0 : timeLines.hashCode());
+		result = prime * result + type;
 		return result;
 	}
 
@@ -219,73 +260,83 @@ public class MatterDomain {
 		if (getClass() != obj.getClass())
 			return false;
 		MatterDomain other = (MatterDomain) obj;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-					return false;
-		if (subject == null) {
-			if (other.subject != null)
-				return false;
-		} else if (!subject.equals(other.subject))
-					return false;
-		if (type != other.type)
-			return false;
 		if (charges == null) {
 			if (other.charges != null)
 				return false;
 		} else if (!charges.equals(other.charges))
-					return false;
+			return false;
 		if (createdBy == null) {
 			if (other.createdBy != null)
 				return false;
 		} else if (!createdBy.equals(other.createdBy))
-					return false;
+			return false;
 		if (createdDate == null) {
 			if (other.createdDate != null)
 				return false;
 		} else if (!createdDate.equals(other.createdDate))
-					return false;
+			return false;
 		if (firNo == null) {
 			if (other.firNo != null)
 				return false;
 		} else if (!firNo.equals(other.firNo))
-					return false;
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-					return false;
+			return false;
 		if (incDate == null) {
 			if (other.incDate != null)
 				return false;
 		} else if (!incDate.equals(other.incDate))
-					return false;
+			return false;
 		if (juridiction == null) {
 			if (other.juridiction != null)
 				return false;
 		} else if (!juridiction.equals(other.juridiction))
-					return false;
-		else if (listingdate == null) {
+			return false;
+		if (listingdate == null) {
 			if (other.listingdate != null)
 				return false;
 		} else if (!listingdate.equals(other.listingdate))
-					return false;
+			return false;
 		if (modifiedBy == null) {
 			if (other.modifiedBy != null)
 				return false;
 		} else if (!modifiedBy.equals(other.modifiedBy))
-					return false;
+			return false;
 		if (modifiedDate == null) {
 			if (other.modifiedDate != null)
 				return false;
 		} else if (!modifiedDate.equals(other.modifiedDate))
-					return false;
+			return false;
+		if (parties == null) {
+			if (other.parties != null)
+				return false;
+		} else if (!parties.equals(other.parties))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		if (subject == null) {
+			if (other.subject != null)
+				return false;
+		} else if (!subject.equals(other.subject))
+			return false;
 		if (summary == null) {
 			if (other.summary != null)
 				return false;
 		} else if (!summary.equals(other.summary))
-					return false;
+			return false;
+		if (timeLines == null) {
+			if (other.timeLines != null)
+				return false;
+		} else if (!timeLines.equals(other.timeLines))
+			return false;
+		if (type != other.type)
+			return false;
 		return true;
 	}
 
@@ -295,7 +346,8 @@ public class MatterDomain {
 				+ listingdate + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + ", type=" + type
 				+ ", status=" + status + ", firNo=" + firNo + ", summary=" + summary + ", juridiction=" + juridiction
 				+ ", charges=" + charges + ", createdBy=" + createdBy + ", modifiedBy=" + modifiedBy + ", parties="
-				+ parties + "]";
+				+ parties + ", timeLines=" + timeLines + "]";
 	}
 
+	
 }

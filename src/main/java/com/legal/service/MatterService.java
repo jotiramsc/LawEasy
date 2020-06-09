@@ -7,25 +7,42 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.legal.domain.MatterDomain;
 import com.legal.model.MatterModel;
 import com.legal.repository.MatterRepository;
+import com.legal.repository.PartyRepository;
+import com.legal.repository.TimeLineRepository;
 
 @Service
 public class MatterService implements Mappable<MatterDomain, MatterModel> {
 	@Autowired
 	MatterRepository repository;
+	
+	@Autowired
+	PartyRepository partyRepository;
+	
+	@Autowired
+	TimeLineRepository timeLineRepository;
 
 	@Autowired
 	ModelMapper modelMapper;
 
-	public List<MatterModel> getAllMatters() {
-		List<MatterDomain> matterList = repository.findAll();
+	public List<MatterModel> getAllMatters(int start, int limit) {
+		Pageable pageable = PageRequest.of(start, limit,Sort.by("modifiedDate").descending());
+		List<MatterDomain> matterList = repository.findAll(pageable).getContent();
 
 		if (!matterList.isEmpty()) {
+			matterList.forEach(matter -> {				
+				matter.setParties(partyRepository.findByMatterId(matter.getId()));
+				matter.setTimeLines(timeLineRepository.findByMatterId(matter.getId(), pageable));
+			});
 			return this.convertToModelList(matterList);
+			
 		} else {
 			return new ArrayList<>();
 		}

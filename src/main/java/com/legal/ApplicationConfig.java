@@ -33,10 +33,9 @@ public class ApplicationConfig {
 	    AbstractConverter<String, LocalDate> toStringDate = new AbstractConverter<String, LocalDate>() {
 	        @Override
 	        protected LocalDate convert(String source) {
-	            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	            LocalDate localDate = source==null?LocalDate.now(): LocalDate.parse(source, format);
-	            return localDate;
-	        }
+	            DateTimeFormatter format = DateTimeFormatter.ofPattern(LowLiterals.DATE_FORMAT_YMD);
+	            return source==null?LocalDate.now(): LocalDate.parse(source, format);
+	           	        }
 	    };
 
 
@@ -49,7 +48,7 @@ public class ApplicationConfig {
 		Provider<String> localDateProvider = new AbstractProvider<String>() {
 	        @Override
 	        public String get() {
-	        	DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        	DateTimeFormatter format = DateTimeFormatter.ofPattern(LowLiterals.DATE_FORMAT_YMD);
 	            return format.format(LocalDate.now());
 	        }
 	    };
@@ -57,9 +56,8 @@ public class ApplicationConfig {
 	    AbstractConverter<LocalDate, String> toStringDate = new AbstractConverter<LocalDate,String>() {
 	        @Override
 	        protected String convert(LocalDate source) {
-	            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	            String localDate = source==null?"": source.format(format);
-	            return localDate;
+	            DateTimeFormatter format = DateTimeFormatter.ofPattern(LowLiterals.DATE_FORMAT_YMD);
+	            return source==null?"": source.format(format);	         
 	        }
 	    };
 

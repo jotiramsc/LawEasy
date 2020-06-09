@@ -13,9 +13,8 @@ import com.legal.domain.PartyDomain;
 import com.legal.model.PartyModel;
 import com.legal.repository.PartyRepository;
 
-
 @Service
-public class PartyService implements Mappable<PartyDomain> {
+public class PartyService implements Mappable<PartyDomain, PartyModel> {
 	@Autowired
 	PartyRepository repository;
 
@@ -25,36 +24,35 @@ public class PartyService implements Mappable<PartyDomain> {
 	public List<PartyModel> getAllParties() {
 		List<PartyDomain> partyList = repository.findAll();
 
-		if (partyList.size() > 0) {
+		if (!partyList.isEmpty()) {
 			return this.convertToModelList(partyList);
 		} else {
-			return new ArrayList<PartyModel>();
+			return new ArrayList<>();
 		}
 	}
 
-	public PartyModel getPartyById(Long id) throws RecordNotFoundException {
+	public PartyModel getPartyById(Long id) throws LowException {
 		Optional<PartyDomain> party = repository.findById(id);
 
 		if (party.isPresent()) {
-			return  convertToModel(party.get());
+			return convertToModel(party.get());
 		} else {
-			throw new RecordNotFoundException("No party record exist for given id");
+			throw new LowException("No party record exist for given id");
 		}
 	}
 
-	public PartyModel createOrUpdateParty(PartyModel model) throws RecordNotFoundException {
-		return  convertToModel(repository.save(convertToDomain(model)));
+	public PartyModel createOrUpdateParty(PartyModel model)  {
+		return convertToModel(repository.save(convertToDomain(model)));
 
 	}
-	
 
-	public void deletePartyById(Long id) throws RecordNotFoundException {
+	public void deletePartyById(Long id) throws LowException {
 		Optional<PartyDomain> party = repository.findById(id);
 
 		if (party.isPresent()) {
 			repository.deleteById(id);
 		} else {
-			throw new RecordNotFoundException("No Party record exist for given id");
+			throw new LowException("No Party record exist for given id");
 		}
 	}
 
@@ -69,16 +67,13 @@ public class PartyService implements Mappable<PartyDomain> {
 	}
 
 	@Override
-	public List<PartyModel> convertToModelList(List domainlist) {
-		return (List<PartyModel>) domainlist.parallelStream().map(d -> this.convertToModel(d))
-				.collect(Collectors.toList());
+	public List convertToModelList(List<PartyDomain> domainlist) {
+		return domainlist.parallelStream().map(this::convertToModel).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<PartyDomain> convertToDomainList(List modelList) {
-		return (List<PartyDomain>) modelList.parallelStream().map(m -> this.convertToDomain(m))
-				.collect(Collectors.toList());
+	public List convertToDomainList(List<PartyModel> modelList) {
+		return modelList.parallelStream().map(this::convertToDomain).collect(Collectors.toList());
 	}
 
 }
-

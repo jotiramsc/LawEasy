@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.legal.model.MatterModel;
 import com.legal.service.MatterService;
-import com.legal.service.RecordNotFoundException;
+import com.legal.service.LowException;
 
 
 @RestController
@@ -28,23 +28,23 @@ public class MatterController
     @GetMapping
     public ResponseEntity<List<MatterModel>> getAllMatters() {
         List<MatterModel> list = matterService.getAllMatters(); 
-        return new ResponseEntity<List<MatterModel>>(list, new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
  
     @GetMapping("/{id}")
-    public ResponseEntity<MatterModel> getMatterById(@PathVariable("id") Long id) throws RecordNotFoundException {
+    public ResponseEntity<MatterModel> getMatterById(@PathVariable("id") Long id) throws LowException {
         MatterModel entity = matterService.getMatterById(id); 
-        return new ResponseEntity<MatterModel>(entity, new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(entity, new HttpHeaders(), HttpStatus.OK);
     }
  
     @PostMapping
-    public ResponseEntity<MatterModel> createOrUpdateMatter(MatterModel matter) throws RecordNotFoundException {
+    public ResponseEntity<MatterModel> createOrUpdateMatter(MatterModel matter) {
         MatterModel updated = matterService.createOrUpdateMatter(matter);
-        return new ResponseEntity<MatterModel>(updated, new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
     }
  
     @DeleteMapping("/{id}")
-    public HttpStatus deleteMatterById(@PathVariable("id") Long id)throws RecordNotFoundException {
+    public HttpStatus deleteMatterById(@PathVariable("id") Long id)throws LowException {
         matterService.deleteMatterById(id);
         return HttpStatus.OK;
     }

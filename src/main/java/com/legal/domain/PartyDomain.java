@@ -4,9 +4,14 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder.Case;
+import com.legal.Utility;
 
 @Entity(name = "party")
 public class PartyDomain {
@@ -45,32 +50,13 @@ public class PartyDomain {
 	@Column
 	String gender;
 
-
 	@ManyToMany(mappedBy = "parties")
 	Set<MatterDomain> matters = new HashSet<>();
 
 	public PartyDomain() {
-		super();
-		// TODO Auto-generated constructor stub
+		super();	
 	}
-
-	public PartyDomain(int id, String type, String firstName, String middleName, String lastName, int age,
-			String occupation, LocalDate dob, String emailId, long contactNo, String gender, Set<MatterDomain> cases) {
-		super();
-		this.id = id;
-		this.type = type;
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.lastName = lastName;
-		this.age = age;
-		this.occupation = occupation;
-		this.dob = dob;
-		this.emailId = emailId;
-		this.contactNo = contactNo;
-		this.gender = gender;
-		matters = cases;
-	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -159,8 +145,6 @@ public class PartyDomain {
 		this.gender = gender;
 	}
 
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -189,65 +173,33 @@ public class PartyDomain {
 		if (getClass() != obj.getClass())
 			return false;
 		PartyDomain other = (PartyDomain) obj;
-		if (matters == null) {
-			if (other.matters != null)
-				return false;
-		} else if (!matters.equals(other.matters))
-			return false;
-		if (age != other.age)
-			return false;
-		if (contactNo != other.contactNo)
-			return false;
-		if (dob == null) {
-			if (other.dob != null)
-				return false;
-		} else if (!dob.equals(other.dob))
-			return false;
-		if (emailId == null) {
-			if (other.emailId != null)
-				return false;
-		} else if (!emailId.equals(other.emailId))
-			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (gender == null) {
-			if (other.gender != null)
-				return false;
-		} else if (!gender.equals(other.gender))
-			return false;
-		if (id != other.id)
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (middleName == null) {
-			if (other.middleName != null)
-				return false;
-		} else if (!middleName.equals(other.middleName))
-			return false;
-		if (occupation == null) {
-			if (other.occupation != null)
-				return false;
-		} else if (!occupation.equals(other.occupation))
-			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
-			return false;
-		return true;
+		return ( Utility.equals(matters, other.matters)
+				&& Utility.equals(age, other.age)
+				&& Utility.equals(contactNo, other.contactNo)
+				&& Utility.equals(dob, other.dob)
+				&& Utility.equals(emailId, other.emailId)
+				&& Utility.equals(firstName, other.firstName)
+				&& Utility.equals(gender, other.gender)
+				&& Utility.equals(id, other.id)
+				&& Utility.equals(lastName, other.lastName)
+				&& Utility.equals(middleName, other.middleName)
+				&& Utility.equals(occupation, other.occupation)
+				&& Utility.equals(type, other.type));
 	}
 
 	@Override
 	public String toString() {
 		return "PartyDomain [id=" + id + ", type=" + type + ", firstName=" + firstName + ", middleName=" + middleName
 				+ ", lastName=" + lastName + ", age=" + age + ", occupation=" + occupation + ", dob=" + dob
-				+ ", emailId=" + emailId + ", contactNo=" + contactNo + ", gender=" + gender + ", Cases=" + matters + "]";
+				+ ", emailId=" + emailId + ", contactNo=" + contactNo + ", gender=" + gender + ", Cases=" + matters
+				+ "]";
+	}
+	
+	public static void main(String[] args) {
+		PartyDomain d1=new PartyDomain();
+		PartyDomain d2=new PartyDomain();
+		d1.setAge(10);
+		System.out.println(d1.equals(d2));
 	}
 
 }

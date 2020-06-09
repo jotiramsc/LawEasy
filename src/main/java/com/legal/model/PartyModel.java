@@ -1,65 +1,38 @@
 package com.legal.model;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-
 public class PartyModel {
-	
-	
+
 	int id;
-	
+
 	String type;
-	
+
 	String firstName;
-	
+
 	String middleName;
-	
+
 	String lastName;
-	
+
 	int age;
 
-	String occupation;	
-	
+	String occupation;
+
 	String dob;
-	
+
 	String emailId;
-	
+
 	long contactNo;
 
 	String gender;
-	
-	Set<MatterModel> matters =new HashSet<>();
+
+	Set<MatterModel> matters = new HashSet<>();
 
 	public PartyModel() {
-		super();
-		// TODO Auto-generated constructor stub
+		super();	
 	}
-
-	public PartyModel(int id, String type, String firstName, String middleName, String lastName, int age,
-			String occupation, String dob, String emailId, long contactNo, String gender, Set<MatterModel> matters) {
-		super();
-		this.id = id;
-		this.type = type;
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.lastName = lastName;
-		this.age = age;
-		this.occupation = occupation;
-		this.dob = dob;
-		this.emailId = emailId;
-		this.contactNo = contactNo;
-		this.gender = gender;
-		this.matters = matters;
-	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -192,49 +165,49 @@ public class PartyModel {
 			if (other.dob != null)
 				return false;
 		} else if (!dob.equals(other.dob))
-			return false;
+					return false;
 		if (emailId == null) {
 			if (other.emailId != null)
 				return false;
 		} else if (!emailId.equals(other.emailId))
-			return false;
+					return false;
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
-			return false;
+					return false;
 		if (gender == null) {
 			if (other.gender != null)
 				return false;
 		} else if (!gender.equals(other.gender))
-			return false;
+					return false;
 		if (id != other.id)
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;
 		} else if (!lastName.equals(other.lastName))
-			return false;
+					return false;
 		if (middleName == null) {
 			if (other.middleName != null)
 				return false;
 		} else if (!middleName.equals(other.middleName))
-			return false;
+					return false;
 		if (occupation == null) {
 			if (other.occupation != null)
 				return false;
 		} else if (!occupation.equals(other.occupation))
-			return false;
+					return false;
 		if (matters == null) {
 			if (other.matters != null)
 				return false;
 		} else if (!matters.equals(other.matters))
-			return false;
+					return false;
 		if (type == null) {
 			if (other.type != null)
 				return false;
 		} else if (!type.equals(other.type))
-			return false;
+					return false;
 		return true;
 	}
 
@@ -245,9 +218,5 @@ public class PartyModel {
 				+ ", emailId=" + emailId + ", contactNo=" + contactNo + ", gender=" + gender + ", matters=" + matters
 				+ "]";
 	}
-	
-	
-	
-	
 
 }

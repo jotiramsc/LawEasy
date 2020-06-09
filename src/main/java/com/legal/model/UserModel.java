@@ -1,6 +1,7 @@
 package com.legal.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -12,19 +13,21 @@ public class UserModel implements UserDetails {
 
 	int id;
 
-	String first_name, last_name, email;
+	String firstName;
+	String lastName;
+	String email;
 
 	long mobile;
 
 	boolean validate;
 
-	String login_type;
+	String loginType;
 
 	String role;
 
-	Timestamp created_ts;
+	Timestamp createdTs;
 
-	Timestamp modified_ts;
+	Timestamp modifiedTs;
 
 	String username;
 
@@ -36,22 +39,6 @@ public class UserModel implements UserDetails {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getFirst_name() {
-		return first_name;
-	}
-
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
-	}
-
-	public String getLast_name() {
-		return last_name;
-	}
-
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
 	}
 
 	public String getEmail() {
@@ -78,36 +65,12 @@ public class UserModel implements UserDetails {
 		this.validate = validate;
 	}
 
-	public String getLogin_type() {
-		return login_type;
-	}
-
-	public void setLogin_type(String login_type) {
-		this.login_type = login_type;
-	}
-
 	public String getRole() {
 		return role;
 	}
 
 	public void setRole(String role) {
 		this.role = role;
-	}
-
-	public Timestamp getCreated_ts() {
-		return created_ts;
-	}
-
-	public void setCreated_ts(Timestamp created_ts) {
-		this.created_ts = created_ts;
-	}
-
-	public Timestamp getModified_ts() {
-		return modified_ts;
-	}
-
-	public void setModified_ts(Timestamp modified_ts) {
-		this.modified_ts = modified_ts;
 	}
 
 	public void setUsername(String username) {
@@ -120,44 +83,81 @@ public class UserModel implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.password;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.username;
 	}
 
 	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
+	public boolean isAccountNonExpired() {	
 		return true;
 	}
 
 	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
+	public boolean isAccountNonLocked() {	
 		return true;
 	}
 
 	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
+	public boolean isCredentialsNonExpired() {	
 		return true;
 	}
 
 	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
+	public boolean isEnabled() {	
 		return true;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getLoginType() {
+		return loginType;
+	}
+
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
+	}
+
+	public Timestamp getCreatedTs() {
+		return createdTs;
+	}
+
+	public void setCreatedTs(Timestamp createdTs) {
+		this.createdTs = createdTs;
+	}
+
+	public Timestamp getModifiedTs() {
+		return modifiedTs;
+	}
+
+	public void setModifiedTs(Timestamp modifiedTs) {
+		this.modifiedTs = modifiedTs;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

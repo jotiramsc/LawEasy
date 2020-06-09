@@ -3,88 +3,72 @@ package com.legal.domain;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity(name = "matter")
 public class MatterDomain {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
-	
+
 	@Column(length = 50)
 	String subject;
-	
+
 	@Column
 	LocalDate incDate;
-	
+
 	@Column
 	LocalDate listingdate;
-	
+
 	@Column
 	Timestamp createdDate;
-	
+
 	@Column
 	Timestamp modifiedDate;
-	
+
 	@Column
 	int type;
-	
+
 	@Column
 	String status;
-	
+
 	@Column
 	Integer firNo;
-	
+
 	@Column
 	String summary;
-	
+
 	@Column
 	String juridiction;
-	
+
 	@Column
 	String charges;
-	
+
 	@Column
 	Integer createdBy;
-	
+
 	@Column
 	Integer modifiedBy;
 
-	
 	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "matter_parties", joinColumns = @JoinColumn(name = "matter_id", referencedColumnName = "id"), 
-    inverseJoinColumns = @JoinColumn(name = "party_id", referencedColumnName = "id"))
-    Set<PartyDomain> parties =new HashSet<>();
+	@JoinTable(name = "matter_parties", joinColumns = @JoinColumn(name = "matter_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "party_id", referencedColumnName = "id"))
+	Set<PartyDomain> parties = new HashSet<>();
 
 	public MatterDomain() {
 		super();
-		
-	}
 
-	public MatterDomain(Long id, String subject, LocalDate incDate, LocalDate listingdate, Timestamp createdDate,
-			Timestamp modifiedDate, int type, String status, Integer firNo, String summary, String juridiction,
-			String charges, Integer createdBy, Integer modifiedBy, Set<PartyDomain> parties) {
-		super();
-		this.id = id;
-		this.subject = subject;
-		this.incDate = incDate;
-		this.listingdate = listingdate;
-		this.createdDate = createdDate;
-		this.modifiedDate = modifiedDate;
-		this.type = type;
-		this.status = status;
-		this.firNo = firNo;
-		this.summary = summary;
-		this.juridiction = juridiction;
-		this.charges = charges;
-		this.createdBy = createdBy;
-		this.modifiedBy = modifiedBy;
-		this.parties = parties;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -222,7 +206,6 @@ public class MatterDomain {
 		result = prime * result + ((listingdate == null) ? 0 : listingdate.hashCode());
 		result = prime * result + ((modifiedBy == null) ? 0 : modifiedBy.hashCode());
 		result = prime * result + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
-		//result = prime * result + ((parties == null) ? 0 : parties.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		return result;
 	}
@@ -240,89 +223,79 @@ public class MatterDomain {
 			if (other.status != null)
 				return false;
 		} else if (!status.equals(other.status))
-			return false;
+					return false;
 		if (subject == null) {
 			if (other.subject != null)
 				return false;
 		} else if (!subject.equals(other.subject))
-			return false;
+					return false;
 		if (type != other.type)
 			return false;
 		if (charges == null) {
 			if (other.charges != null)
 				return false;
 		} else if (!charges.equals(other.charges))
-			return false;
+					return false;
 		if (createdBy == null) {
 			if (other.createdBy != null)
 				return false;
 		} else if (!createdBy.equals(other.createdBy))
-			return false;
+					return false;
 		if (createdDate == null) {
 			if (other.createdDate != null)
 				return false;
 		} else if (!createdDate.equals(other.createdDate))
-			return false;
+					return false;
 		if (firNo == null) {
 			if (other.firNo != null)
 				return false;
 		} else if (!firNo.equals(other.firNo))
-			return false;
+					return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
+					return false;
 		if (incDate == null) {
 			if (other.incDate != null)
 				return false;
 		} else if (!incDate.equals(other.incDate))
-			return false;
+					return false;
 		if (juridiction == null) {
 			if (other.juridiction != null)
 				return false;
 		} else if (!juridiction.equals(other.juridiction))
-			return false;
-		if (listingdate == null) {
+					return false;
+		else if (listingdate == null) {
 			if (other.listingdate != null)
 				return false;
 		} else if (!listingdate.equals(other.listingdate))
-			return false;
+					return false;
 		if (modifiedBy == null) {
 			if (other.modifiedBy != null)
 				return false;
 		} else if (!modifiedBy.equals(other.modifiedBy))
-			return false;
+					return false;
 		if (modifiedDate == null) {
 			if (other.modifiedDate != null)
 				return false;
 		} else if (!modifiedDate.equals(other.modifiedDate))
-			return false;
-//		if (parties == null) {
-//			if (other.parties != null)
-//				return false;
-//		} else if (!parties.equals(other.parties))
-//			return false;
+					return false;
 		if (summary == null) {
 			if (other.summary != null)
 				return false;
 		} else if (!summary.equals(other.summary))
-			return false;
+					return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "MatterDomain [id=" + id + ", subject=" + subject + ", incDate=" + incDate + ", listingdate="
-				+ listingdate + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + ", type="
-				+ type + ", status=" + status + ", firNo=" + firNo + ", summary=" + summary
-				+ ", juridiction=" + juridiction + ", charges=" + charges + ", createdBy=" + createdBy + ", modifiedBy="
-				+ modifiedBy + ", parties=" + parties + "]";
+				+ listingdate + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + ", type=" + type
+				+ ", status=" + status + ", firNo=" + firNo + ", summary=" + summary + ", juridiction=" + juridiction
+				+ ", charges=" + charges + ", createdBy=" + createdBy + ", modifiedBy=" + modifiedBy + ", parties="
+				+ parties + "]";
 	}
-	
-	
-	
-	
-	
-	
+
 }

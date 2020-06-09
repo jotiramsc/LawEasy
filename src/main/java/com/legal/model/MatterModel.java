@@ -1,77 +1,43 @@
 package com.legal.model;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.legal.domain.PartyDomain;
-
-
 public class MatterModel {
-	
+
 	int id;
-	
+
 	String subject;
-	
+
 	String incDate;
-	
+
 	String listingdate;
-	
+
 	String createdDate;
-	
+
 	String modifiedDate;
-	
+
 	int type;
 
 	String status;
-	
-	int firNo;
-	
-	String summary;
-	
-	String juridiction;
-	
-	String charges;
-	
-	int createdBy;
-	
-	int modifiedBy;
-	
-	Set<PartyModel> parties =new HashSet<>();
-	
-	
 
-	public MatterModel(int id, String subject, String incDate, String listingdate, String createdDate,
-			String modifiedDate, int type, String status, int firNo, String summary, String juridiction,
-			String charges, int createdBy, int modifiedBy, Set<PartyModel> parties) {
-		super();
-		this.id = id;
-		this.subject = subject;
-		this.incDate = incDate;
-		this.listingdate = listingdate;
-		this.createdDate = createdDate;
-		this.modifiedDate = modifiedDate;
-		this.type = type;
-		this.status = status;
-		this.firNo = firNo;
-		this.summary = summary;
-		this.juridiction = juridiction;
-		this.charges = charges;
-		this.createdBy = createdBy;
-		this.modifiedBy = modifiedBy;
-		this.parties = parties;
-	}
+	int firNo;
+
+	String summary;
+
+	String juridiction;
+
+	String charges;
+
+	int createdBy;
+
+	int modifiedBy;
+
+	Set<PartyModel> parties = new HashSet<>();
+	
 
 	public MatterModel() {
-		super();
-		// TODO Auto-generated constructor stub
+		super();	
 	}
 
 	public int getId() {
@@ -229,26 +195,26 @@ public class MatterModel {
 			if (other.status != null)
 				return false;
 		} else if (!status.equals(other.status))
-			return false;
+					return false;
 		if (subject == null) {
 			if (other.subject != null)
 				return false;
 		} else if (!subject.equals(other.subject))
-			return false;
+					return false;
 		if (type != other.type)
 			return false;
 		if (charges == null) {
 			if (other.charges != null)
 				return false;
 		} else if (!charges.equals(other.charges))
-			return false;
+					return false;
 		if (createdBy != other.createdBy)
 			return false;
 		if (createdDate == null) {
 			if (other.createdDate != null)
 				return false;
 		} else if (!createdDate.equals(other.createdDate))
-			return false;
+					return false;
 		if (firNo != other.firNo)
 			return false;
 		if (id != other.id)
@@ -257,47 +223,43 @@ public class MatterModel {
 			if (other.incDate != null)
 				return false;
 		} else if (!incDate.equals(other.incDate))
-			return false;
+					return false;
 		if (juridiction == null) {
 			if (other.juridiction != null)
 				return false;
 		} else if (!juridiction.equals(other.juridiction))
-			return false;
+					return false;
 		if (listingdate == null) {
 			if (other.listingdate != null)
 				return false;
 		} else if (!listingdate.equals(other.listingdate))
-			return false;
+					return false;
 		if (modifiedBy != other.modifiedBy)
 			return false;
 		if (modifiedDate == null) {
 			if (other.modifiedDate != null)
 				return false;
 		} else if (!modifiedDate.equals(other.modifiedDate))
-			return false;
+					return false;
 		if (parties == null) {
 			if (other.parties != null)
 				return false;
 		} else if (!parties.equals(other.parties))
-			return false;
+					return false;
 		if (summary == null) {
 			if (other.summary != null)
 				return false;
 		} else if (!summary.equals(other.summary))
-			return false;
+					return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "CaseModel [id=" + id + ", subject=" + subject + ", incDate=" + incDate + ", listingdate="
-				+ listingdate + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + ", type="
-				+ type + ", status=" + status + ", firNo=" + firNo + ", summary=" + summary
-				+ ", juridiction=" + juridiction + ", charges=" + charges + ", createdBy=" + createdBy + ", modifiedBy="
-				+ modifiedBy + ", parties=" + parties + "]";
+		return "CaseModel [id=" + id + ", subject=" + subject + ", incDate=" + incDate + ", listingdate=" + listingdate
+				+ ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + ", type=" + type + ", status="
+				+ status + ", firNo=" + firNo + ", summary=" + summary + ", juridiction=" + juridiction + ", charges="
+				+ charges + ", createdBy=" + createdBy + ", modifiedBy=" + modifiedBy + ", parties=" + parties + "]";
 	}
 
-	
-
-		
 }

@@ -14,7 +14,7 @@ import com.legal.model.MatterModel;
 import com.legal.repository.MatterRepository;
 
 @Service
-public class MatterService implements Mappable<MatterDomain> {
+public class MatterService implements Mappable<MatterDomain, MatterModel> {
 	@Autowired
 	MatterRepository repository;
 
@@ -24,36 +24,35 @@ public class MatterService implements Mappable<MatterDomain> {
 	public List<MatterModel> getAllMatters() {
 		List<MatterDomain> matterList = repository.findAll();
 
-		if (matterList.size() > 0) {
+		if (!matterList.isEmpty()) {
 			return this.convertToModelList(matterList);
 		} else {
-			return new ArrayList<MatterModel>();
+			return new ArrayList<>();
 		}
 	}
 
-	public MatterModel getMatterById(Long id) throws RecordNotFoundException {
+	public MatterModel getMatterById(Long id) throws LowException {
 		Optional<MatterDomain> matter = repository.findById(id);
 
 		if (matter.isPresent()) {
-			return  convertToModel(matter.get());
+			return convertToModel(matter.get());
 		} else {
-			throw new RecordNotFoundException("No matter record exist for given id");
+			throw new LowException("No matter record exist for given id");
 		}
 	}
 
-	public MatterModel createOrUpdateMatter(MatterModel model) throws RecordNotFoundException {
-		return  convertToModel(repository.save(convertToDomain(model)));
+	public MatterModel createOrUpdateMatter(MatterModel model)  {
+		return convertToModel(repository.save(convertToDomain(model)));
 
 	}
-	
 
-	public void deleteMatterById(Long id) throws RecordNotFoundException {
+	public void deleteMatterById(Long id) throws LowException {
 		Optional<MatterDomain> matter = repository.findById(id);
 
 		if (matter.isPresent()) {
 			repository.deleteById(id);
 		} else {
-			throw new RecordNotFoundException("No Matter record exist for given id");
+			throw new LowException("No Matter record exist for given id");
 		}
 	}
 
@@ -68,14 +67,14 @@ public class MatterService implements Mappable<MatterDomain> {
 	}
 
 	@Override
-	public List<MatterModel> convertToModelList(List domainlist) {
-		return (List<MatterModel>) domainlist.parallelStream().map(d -> this.convertToModel(d))
+	public List convertToModelList(List<MatterDomain> domainlist) {
+		return  domainlist.parallelStream().map(this::convertToModel)
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<MatterDomain> convertToDomainList(List modelList) {
-		return (List<MatterDomain>) modelList.parallelStream().map(m -> this.convertToDomain(m))
+	public List convertToDomainList(List<MatterModel> modelList) {
+		return modelList.parallelStream().map(this::convertToModel)
 				.collect(Collectors.toList());
 	}
 

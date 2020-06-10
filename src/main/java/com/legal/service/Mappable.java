@@ -4,12 +4,12 @@ import java.util.List;
 
 public interface Mappable<E, T> {
 
-	public Object convertToModel(Object domainObject);
+	public T convertToModel(E domainObject);
 
-	public Object convertToDomain(Object modelObject);
+	public E convertToDomain(T modelObject);
 
-	public List<Object> convertToModelList(List<E> domainlist);
+	public List<T> convertToModelList(List<E> domainlist);
 
-	public List<Object> convertToDomainList(List<T> modelList);
+	public List<E> convertToDomainList(List<T> modelList);
 
 }

@@ -74,25 +74,25 @@ public class MatterService implements Mappable<MatterDomain, MatterModel> {
 	}
 
 	@Override
-	public MatterModel convertToModel(Object domainObject) {
-		return modelMapper.map(domainObject, MatterModel.class);
-	}
-
-	@Override
-	public MatterDomain convertToDomain(Object modelObject) {
-		return modelMapper.map(modelObject, MatterDomain.class);
-	}
-
-	@Override
-	public List convertToModelList(List<MatterDomain> domainlist) {
+	public List<MatterModel> convertToModelList(List<MatterDomain> domainlist) {
 		return  domainlist.parallelStream().map(this::convertToModel)
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List convertToDomainList(List<MatterModel> modelList) {
-		return modelList.parallelStream().map(this::convertToModel)
+	public List<MatterDomain> convertToDomainList(List<MatterModel> modelList) {
+		return modelList.parallelStream().map(this::convertToDomain)
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public MatterModel convertToModel(MatterDomain domainObject) {
+		return modelMapper.map(domainObject, MatterModel.class);
+	}
+
+	@Override
+	public MatterDomain convertToDomain(MatterModel modelObject) {
+		return modelMapper.map(modelObject, MatterDomain.class);
 	}
 
 }

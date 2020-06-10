@@ -40,6 +40,7 @@ public class PartyService implements Mappable<PartyDomain, PartyModel> {
 			return new ArrayList<>();
 		}
 	}
+
 	public PartyModel getPartyById(Long id) throws LowException {
 		Optional<PartyDomain> party = repository.findById(id);
 
@@ -50,7 +51,7 @@ public class PartyService implements Mappable<PartyDomain, PartyModel> {
 		}
 	}
 
-	public PartyModel createOrUpdateParty(PartyModel model)  {
+	public PartyModel createOrUpdateParty(PartyModel model) {
 		return convertToModel(repository.save(convertToDomain(model)));
 
 	}
@@ -66,22 +67,22 @@ public class PartyService implements Mappable<PartyDomain, PartyModel> {
 	}
 
 	@Override
-	public PartyModel convertToModel(Object domainObject) {
+	public PartyModel convertToModel(PartyDomain domainObject) {
 		return modelMapper.map(domainObject, PartyModel.class);
 	}
 
 	@Override
-	public PartyDomain convertToDomain(Object modelObject) {
+	public PartyDomain convertToDomain(PartyModel modelObject) {
 		return modelMapper.map(modelObject, PartyDomain.class);
 	}
 
 	@Override
-	public List convertToModelList(List<PartyDomain> domainlist) {
+	public List<PartyModel> convertToModelList(List<PartyDomain> domainlist) {
 		return domainlist.parallelStream().map(this::convertToModel).collect(Collectors.toList());
 	}
 
 	@Override
-	public List convertToDomainList(List<PartyModel> modelList) {
+	public List<PartyDomain> convertToDomainList(List<PartyModel> modelList) {
 		return modelList.parallelStream().map(this::convertToDomain).collect(Collectors.toList());
 	}
 

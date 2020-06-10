@@ -24,8 +24,8 @@ public class TimeLineService implements Mappable<TimeLineDomain, TimeLineModel> 
 	@Autowired
 	ModelMapper modelMapper;
 
-	public List<TimeLineModel> getAllTimeLinesBymatterId(Long matterId,Integer start,Integer limit) {
-		Pageable pageable = PageRequest.of(start, limit,Sort.by("modifiedDate").descending());
+	public List<TimeLineModel> getAllTimeLinesBymatterId(Long matterId, Integer start, Integer limit) {
+		Pageable pageable = PageRequest.of(start, limit, Sort.by("modifiedDate").descending());
 		List<TimeLineDomain> timeLineList = repository.findByMatterId(matterId, pageable);
 
 		if (!timeLineList.isEmpty()) {
@@ -61,22 +61,22 @@ public class TimeLineService implements Mappable<TimeLineDomain, TimeLineModel> 
 	}
 
 	@Override
-	public TimeLineModel convertToModel(Object domainObject) {
+	public TimeLineModel convertToModel(TimeLineDomain domainObject) {
 		return modelMapper.map(domainObject, TimeLineModel.class);
 	}
 
 	@Override
-	public TimeLineDomain convertToDomain(Object modelObject) {
+	public TimeLineDomain convertToDomain(TimeLineModel modelObject) {
 		return modelMapper.map(modelObject, TimeLineDomain.class);
 	}
 
 	@Override
-	public List convertToModelList(List<TimeLineDomain> domainlist) {
+	public List<TimeLineModel> convertToModelList(List<TimeLineDomain> domainlist) {
 		return domainlist.parallelStream().map(this::convertToModel).collect(Collectors.toList());
 	}
 
 	@Override
-	public List convertToDomainList(List<TimeLineModel> modelList) {
+	public List<TimeLineDomain> convertToDomainList(List<TimeLineModel> modelList) {
 		return modelList.parallelStream().map(this::convertToDomain).collect(Collectors.toList());
 	}
 

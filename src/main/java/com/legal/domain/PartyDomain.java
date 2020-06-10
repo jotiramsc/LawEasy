@@ -1,15 +1,20 @@
 package com.legal.domain;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "party")
 public class PartyDomain {
@@ -48,11 +53,22 @@ public class PartyDomain {
 	@Column
 	String gender;
 
-	@ManyToMany(mappedBy = "parties")
-	List<MatterDomain> matters = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "matter_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private MatterDomain matter;
 
 	public PartyDomain() {
 		super();
+	}
+
+	public MatterDomain getMatter() {
+		return matter;
+	}
+
+	public void setMatter(MatterDomain matter) {
+		this.matter = matter;
 	}
 
 	public int getId() {
@@ -155,7 +171,6 @@ public class PartyDomain {
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((matters == null) ? 0 : matters.hashCode());
 		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
 		result = prime * result + ((occupation == null) ? 0 : occupation.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -179,49 +194,44 @@ public class PartyDomain {
 			if (other.dob != null)
 				return false;
 		} else if (!dob.equals(other.dob))
-					return false;
+			return false;
 		if (emailId == null) {
 			if (other.emailId != null)
 				return false;
 		} else if (!emailId.equals(other.emailId))
-					return false;
+			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
-					return false;
+			return false;
 		if (gender == null) {
 			if (other.gender != null)
 				return false;
 		} else if (!gender.equals(other.gender))
-					return false;
+			return false;
 		if (id != other.id)
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;
 		} else if (!lastName.equals(other.lastName))
-					return false;
-		if (matters == null) {
-			if (other.matters != null)
-				return false;
-		} else if (!matters.equals(other.matters))
-					return false;
+			return false;
 		if (middleName == null) {
 			if (other.middleName != null)
 				return false;
 		} else if (!middleName.equals(other.middleName))
-					return false;
+			return false;
 		if (occupation == null) {
 			if (other.occupation != null)
 				return false;
 		} else if (!occupation.equals(other.occupation))
-					return false;
+			return false;
 		if (type == null) {
 			if (other.type != null)
 				return false;
 		} else if (!type.equals(other.type))
-					return false;
+			return false;
 		return true;
 	}
 
@@ -229,8 +239,7 @@ public class PartyDomain {
 	public String toString() {
 		return "PartyDomain [id=" + id + ", type=" + type + ", firstName=" + firstName + ", middleName=" + middleName
 				+ ", lastName=" + lastName + ", age=" + age + ", occupation=" + occupation + ", dob=" + dob
-				+ ", emailId=" + emailId + ", contactNo=" + contactNo + ", gender=" + gender + ", Cases=" + matters
-				+ "]";
+				+ ", emailId=" + emailId + ", contactNo=" + contactNo + ", gender=" + gender + "]";
 	}
 
 }

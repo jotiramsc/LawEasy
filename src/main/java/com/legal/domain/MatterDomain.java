@@ -4,15 +4,14 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity(name = "matter")
@@ -59,21 +58,17 @@ public class MatterDomain {
 
 	@Column
 	Integer modifiedBy;
-
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "matter_parties", joinColumns = @JoinColumn(name = "matterId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "party_id", referencedColumnName = "id"))
+	@OneToMany(mappedBy = "matter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<PartyDomain> parties = new ArrayList<>();
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "matter_timelines", joinColumns = @JoinColumn(name = "matterId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "timeLine_id", referencedColumnName = "id"))
-	List<TimeLineDomain> timeLines = new ArrayList<>();
 
+	@OneToMany(mappedBy = "matter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	List<TimeLineDomain> timeLines = new ArrayList<>();
 
 	public MatterDomain() {
 		super();
 
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -347,5 +342,4 @@ public class MatterDomain {
 				+ parties + ", timeLines=" + timeLines + "]";
 	}
 
-	
 }

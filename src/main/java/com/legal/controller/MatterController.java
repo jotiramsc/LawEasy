@@ -25,7 +25,7 @@ public class MatterController
     @Autowired
     MatterService matterService;
  
-    @GetMapping
+    @GetMapping(value = "/{start}/{limit}")
     public ResponseEntity<List<MatterModel>> getAllMatters(@PathVariable("start") Integer start,@PathVariable("limit") Integer limit) {
         List<MatterModel> list = matterService.getAllMatters(start,limit); 
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);

@@ -4,9 +4,17 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "timeline")
 public class TimeLineDomain {
@@ -35,6 +43,22 @@ public class TimeLineDomain {
 
 	@Column
 	Integer modifiedBy;
+	
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "matter_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private MatterDomain matter;
+
+	
+	public MatterDomain getMatter() {
+		return matter;
+	}
+
+	public void setMatter(MatterDomain matter) {
+		this.matter = matter;
+	}
 
 	public int getId() {
 		return id;

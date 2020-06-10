@@ -1,7 +1,7 @@
 package com.legal.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MatterModel {
 
@@ -33,11 +33,12 @@ public class MatterModel {
 
 	int modifiedBy;
 
-	Set<PartyModel> parties = new HashSet<>();
-	
+	List<PartyModel> parties = new ArrayList<>();
+
+	List<TimeLineModel> timeLines = new ArrayList<>();
 
 	public MatterModel() {
-		super();	
+		super();
 	}
 
 	public int getId() {
@@ -48,11 +49,11 @@ public class MatterModel {
 		this.id = id;
 	}
 
-	public String getsubject() {
+	public String getSubject() {
 		return subject;
 	}
 
-	public void setsubject(String subject) {
+	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 
@@ -88,19 +89,19 @@ public class MatterModel {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public int gettype() {
+	public int getType() {
 		return type;
 	}
 
-	public void settype(int type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 
-	public String getstatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setstatus(String status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -152,21 +153,26 @@ public class MatterModel {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Set<PartyModel> getParties() {
+	public List<PartyModel> getParties() {
 		return parties;
 	}
 
-	public void setParties(Set<PartyModel> parties) {
+	public void setParties(List<PartyModel> parties) {
 		this.parties = parties;
+	}
+
+	public List<TimeLineModel> getTimeLines() {
+		return timeLines;
+	}
+
+	public void setTimeLines(List<TimeLineModel> timeLines) {
+		this.timeLines = timeLines;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
-		result = prime * result + type;
 		result = prime * result + ((charges == null) ? 0 : charges.hashCode());
 		result = prime * result + createdBy;
 		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
@@ -178,7 +184,11 @@ public class MatterModel {
 		result = prime * result + modifiedBy;
 		result = prime * result + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
 		result = prime * result + ((parties == null) ? 0 : parties.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
+		result = prime * result + ((timeLines == null) ? 0 : timeLines.hashCode());
+		result = prime * result + type;
 		return result;
 	}
 
@@ -191,30 +201,18 @@ public class MatterModel {
 		if (getClass() != obj.getClass())
 			return false;
 		MatterModel other = (MatterModel) obj;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-					return false;
-		if (subject == null) {
-			if (other.subject != null)
-				return false;
-		} else if (!subject.equals(other.subject))
-					return false;
-		if (type != other.type)
-			return false;
 		if (charges == null) {
 			if (other.charges != null)
 				return false;
 		} else if (!charges.equals(other.charges))
-					return false;
+			return false;
 		if (createdBy != other.createdBy)
 			return false;
 		if (createdDate == null) {
 			if (other.createdDate != null)
 				return false;
 		} else if (!createdDate.equals(other.createdDate))
-					return false;
+			return false;
 		if (firNo != other.firNo)
 			return false;
 		if (id != other.id)
@@ -223,43 +221,62 @@ public class MatterModel {
 			if (other.incDate != null)
 				return false;
 		} else if (!incDate.equals(other.incDate))
-					return false;
+			return false;
 		if (juridiction == null) {
 			if (other.juridiction != null)
 				return false;
 		} else if (!juridiction.equals(other.juridiction))
-					return false;
+			return false;
 		if (listingdate == null) {
 			if (other.listingdate != null)
 				return false;
 		} else if (!listingdate.equals(other.listingdate))
-					return false;
+			return false;
 		if (modifiedBy != other.modifiedBy)
 			return false;
 		if (modifiedDate == null) {
 			if (other.modifiedDate != null)
 				return false;
 		} else if (!modifiedDate.equals(other.modifiedDate))
-					return false;
+			return false;
 		if (parties == null) {
 			if (other.parties != null)
 				return false;
 		} else if (!parties.equals(other.parties))
-					return false;
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		if (subject == null) {
+			if (other.subject != null)
+				return false;
+		} else if (!subject.equals(other.subject))
+			return false;
 		if (summary == null) {
 			if (other.summary != null)
 				return false;
 		} else if (!summary.equals(other.summary))
-					return false;
+			return false;
+		if (timeLines == null) {
+			if (other.timeLines != null)
+				return false;
+		} else if (!timeLines.equals(other.timeLines))
+			return false;
+		if (type != other.type)
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "CaseModel [id=" + id + ", subject=" + subject + ", incDate=" + incDate + ", listingdate=" + listingdate
-				+ ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + ", type=" + type + ", status="
-				+ status + ", firNo=" + firNo + ", summary=" + summary + ", juridiction=" + juridiction + ", charges="
-				+ charges + ", createdBy=" + createdBy + ", modifiedBy=" + modifiedBy + ", parties=" + parties + "]";
+		return "MatterModel [id=" + id + ", subject=" + subject + ", incDate=" + incDate + ", listingdate="
+				+ listingdate + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + ", type=" + type
+				+ ", status=" + status + ", firNo=" + firNo + ", summary=" + summary + ", juridiction=" + juridiction
+				+ ", charges=" + charges + ", createdBy=" + createdBy + ", modifiedBy=" + modifiedBy + ", parties="
+				+ parties + ", timeLines=" + timeLines + "]";
 	}
 
+	
 }

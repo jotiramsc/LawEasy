@@ -23,7 +23,7 @@ public class TimeLineController {
 	@Autowired
 	TimeLineService timeLineService;
 
-	@GetMapping
+	@GetMapping(value = "/{matterid}/{start}/{limit}")
 	public ResponseEntity<List<TimeLineModel>> getAllTimeLines(@PathVariable("matterid") Long matterId,@PathVariable("start") Integer start,
 			@PathVariable("limit") Integer limit) {
 		List<TimeLineModel> list = timeLineService.getAllTimeLinesBymatterId(matterId,start, limit);
